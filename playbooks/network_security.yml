@@ -1,0 +1,8 @@
+---
+- name: Network Security
+  hosts: all
+  become: yes
+  roles:
+    - role: harden-linux
+      tags: network_security
+

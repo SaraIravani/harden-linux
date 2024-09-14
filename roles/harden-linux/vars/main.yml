@@ -1,0 +1,28 @@
+---
+# vars file for harden-linux
+timezone: "America/Toronto"  # Change this to your desired timezone
+
+# Variables for User and Access Management
+ssh_config_path: "/etc/ssh/sshd_config"
+permit_root_login: "no"
+
+# Variables for Password Policies
+pam_password_conf_path: "/etc/pam.d/common-password"
+min_password_length: 12
+max_repeat_characters: 3  # Maximum number of repeated characters allowed in passwords
+
+# Variables for Service Management
+unnecessary_services:
+  - name: telnet
+  - name: ftp
+
+# vars file for network security
+
+firewall_rules:
+  - rule: allow
+    port: 22
+    proto: tcp
+  - rule: deny
+
+sshd_config_path: /etc/ssh/sshd_config
+

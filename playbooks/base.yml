@@ -1,0 +1,15 @@
+---
+- name: Basic System Hardening
+  hosts: all
+  become: yes
+
+  roles:
+    - harden-linux
+
+  tasks:
+    - name: Update and upgrade all packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_os_family == "Debian"
+

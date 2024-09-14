@@ -1,0 +1,29 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
+
+platforms:
+  - name: ansible_role_pwquality_ubuntu_min
+    image: ubuntu:18.04
+    dockerfile: ../default/Dockerfile.j2
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../default/converge.yml
+
+scenario:
+  name: ubuntu_min
+
+verifier:
+  name: testinfra
+  directory: ../default/tests

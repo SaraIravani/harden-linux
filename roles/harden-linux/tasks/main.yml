@@ -1,0 +1,40 @@
+---
+# tasks file for harden-linux
+
+- name: Set timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
+  become: true
+
+# Tasks for User and Access Management
+
+- name: Disable root login via SSH
+  lineinfile:
+    path: "{{ ssh_config_path }}"
+    regexp: '^PermitRootLogin'
+    line: "PermitRootLogin {{ permit_root_login }}"
+  notify:
+    - Restart SSH
+  become: true
+
+# Tasks for Password Policies
+
+- name: Enforce minimum password length in PAM
+  lineinfile:
+    path: "{{ pam_password_conf_path }}"
+    regexp: '^password requisite pam_pwquality.so'
+    line: 'password requisite pam_pwquality.so minlen={{ min_password_length }}'
+  become: true
+
+- name: Enforce max repeat characters in PAM
+  lineinfile:
+    path: "{{ pam_password_conf_path }}"
+    regexp: '^password requisite pam_pwquality.so'
+    line: 'password requisite pam_pwquality.so minlen={{ min_password_length }} maxrepeat={{ max_repeat_characters }}'
+  become: true
+
+- name: Include service management tasks
+  include_tasks: service_management.yml
+
+- name: Include network security tasks
+  include_tasks: network_security.yml

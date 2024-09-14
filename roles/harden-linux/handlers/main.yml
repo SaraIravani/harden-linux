@@ -1,0 +1,10 @@
+---
+# handlers file for harden-linux
+
+# Handlers for User and Access Management
+
+- name: Restart SSH
+  service:
+    name: ssh
+    state: restarted
+

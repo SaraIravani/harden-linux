@@ -1,0 +1,7 @@
+---
+- name: Service Management
+  hosts: all
+  become: yes
+  roles:
+    - harden-linux
+

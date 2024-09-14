@@ -1,0 +1,29 @@
+---
+# tasks file for network security
+
+- name: Ensure UFW is installed
+  apt:
+    name: ufw
+    state: enabled
+    update_cache: yes
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+
+- name: Configure firewall rules
+  ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port | default(omit) }}"
+    proto: "{{ item.proto | default(omit) }}"
+    state: present
+  loop: "{{ firewall_rules }}"
+
+- name: Secure SSH settings
+  lineinfile:
+    path: "{{ sshd_config_path }}"
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+  notify:
+    - Restart SSH
+

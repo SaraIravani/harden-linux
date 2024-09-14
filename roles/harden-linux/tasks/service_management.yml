@@ -1,0 +1,10 @@
+---
+# tasks file for service management
+
+- name: Disable unnecessary services
+  service:
+    name: "{{ item.name }}"
+    state: stopped
+    enabled: no
+  when: ansible_facts.services[item] is defined    
+  with_items: "{{ unnecessary_services}}"

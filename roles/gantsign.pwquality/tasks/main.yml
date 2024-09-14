@@ -1,0 +1,24 @@
+---
+- name: install pwquality
+  package:
+    name: libpam-pwquality
+    state: present
+
+- name: write pwquality.conf
+  become: yes
+  template:
+    src: pwquality.conf.j2
+    dest: '/etc/security/pwquality.conf'
+    owner: root
+    group: root
+    mode: 'u=rw,go=r'
+
+- name: add to PAM config
+  lineinfile:
+    path: '/etc/pam.d/common-password'
+    regexp: '^password.*pam_pwquality\.so'
+    insertbefore: '^password.*pam_unix\.so'
+    line: "password\trequired\t\t\tpam_pwquality.so"
+    owner: root
+    group: root
+    mode: 'u=rw,go=r'

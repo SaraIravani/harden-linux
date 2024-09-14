@@ -34,7 +34,9 @@
   become: true
 
 - name: Include service management tasks
-  include_tasks: service_management.yml
+  import_tasks: service_management.yml
+  when: include_service_management | default(false)  
 
 - name: Include network security tasks
-  include_tasks: network_security.yml
+  import_tasks: network_security.yml
+  when: include_network_security | default(false) 

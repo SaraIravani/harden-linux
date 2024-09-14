@@ -1,2 +1,5 @@
 ---
 # defaults file for harden-linux
+include_service_management: false
+include_network_security: false
+

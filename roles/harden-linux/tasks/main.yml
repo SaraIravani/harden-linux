@@ -1,13 +1,14 @@
 ---
 # tasks file for harden-linux
 
+# Set timezone (conditionally included)
 - name: Set timezone
   community.general.timezone:
     name: "{{ timezone }}"
+  when: import_timezone | default(false)
   become: true
 
-# Tasks for User and Access Management
-
+# Tasks for User and Access Management (conditionally included)
 - name: Disable root login via SSH
   lineinfile:
     path: "{{ ssh_config_path }}"
@@ -15,15 +16,16 @@
     line: "PermitRootLogin {{ permit_root_login }}"
   notify:
     - Restart SSH
+  when: import_user_access_management | default(false)
   become: true
 
-# Tasks for Password Policies
-
+# Tasks for Password Policies (conditionally included)
 - name: Enforce minimum password length in PAM
   lineinfile:
     path: "{{ pam_password_conf_path }}"
     regexp: '^password requisite pam_pwquality.so'
     line: 'password requisite pam_pwquality.so minlen={{ min_password_length }}'
+  when: import_password_policies | default(false)
   become: true
 
 - name: Enforce max repeat characters in PAM
@@ -31,12 +33,16 @@
     path: "{{ pam_password_conf_path }}"
     regexp: '^password requisite pam_pwquality.so'
     line: 'password requisite pam_pwquality.so minlen={{ min_password_length }} maxrepeat={{ max_repeat_characters }}'
+  when: import_password_policies | default(false)
   become: true
 
+# Conditionally include service management tasks
 - name: Include service management tasks
   import_tasks: service_management.yml
-  when: include_service_management | default(false)  
+  when: include_service_management | default(false)
 
+# Conditionally include network security tasks
 - name: Include network security tasks
   import_tasks: network_security.yml
-  when: include_network_security | default(false) 
+  when: include_network_security | default(false)
+

@@ -4,12 +4,12 @@
   become: yes
 
   roles:
-    - harden-linux
-
-  tasks:
-    - name: Update and upgrade all packages
-      apt:
-        update_cache: yes
-        upgrade: dist
-      when: ansible_os_family == "Debian"
+    - role: harden-linux
+      vars:
+        import_timezone: true  # To include the timezone task
+        timezone: "UTC"  # Set the desired timezone
+        import_user_access_management: true  # To include the user access management tasks
+        import_password_policies: false  # Set to false to skip password policies
+        include_service_management: false  # Set to true if you want to include service management tasks
+        include_network_security: false  # Set to true if you want to include network security tasks
 

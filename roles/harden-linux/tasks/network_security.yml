@@ -4,24 +4,53 @@
 - name: Ensure UFW is installed
   apt:
     name: ufw
-    state: enabled
+    state: present
     update_cache: yes
+
+- name: Allow SSH connections before enabling UFW
+  ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port | default(omit) }}"
+    proto: "{{ item.proto | default(omit) }}"
+    state: enabled
+  loop: "{{ firewall_rules }}"
+  when: item.port == '22'
 
 - name: Enable UFW
   ufw:
     state: enabled
 
-- name: Configure firewall rules
+- name: Configure allowed firewall rules
   ufw:
     rule: "{{ item.rule }}"
     port: "{{ item.port | default(omit) }}"
-    proto: "{{ item.proto | default(omit) }}"
-    state: present
+    proto: "{{ item.proto | default('tcp') }}"
+    state: enabled
   loop: "{{ firewall_rules }}"
+  when: item.rule == 'allow' and item.port != '22'
 
+- name: Deny all other incoming traffic (TCP)
+  ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port | default(omit) }}"
+    proto: "{{ item.proto | default('tcp') }}"
+    state: enabled
+  loop: "{{ firewall_rules }}"
+  when: item.rule == 'deny' and item.proto == 'tcp'
+
+- name: Deny all other incoming traffic (UDP)
+  ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port | default(omit) }}"
+    proto: "{{ item.proto | default('udp') }}"
+    state: enabled
+  loop: "{{ firewall_rules }}"
+  when: item.rule == 'deny' and item.proto == 'udp'
+
+# Secure SSH settings
 - name: Secure SSH settings
   lineinfile:
-    path: "{{ sshd_config_path }}"
+    path: "{{ ssh_config_path }}"
     regexp: '^PasswordAuthentication'
     line: 'PasswordAuthentication no'
   notify:

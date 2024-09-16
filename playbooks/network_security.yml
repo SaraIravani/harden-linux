@@ -5,4 +5,11 @@
   roles:
     - role: harden-linux
       tags: network_security
+  vars:
+    include_network_security: true  # Ensure that the network security tasks are included
+    include_service_management: false
+    import_timezone: false  
+    import_user_access_management: false
+    import_password_policies: false    
+
 

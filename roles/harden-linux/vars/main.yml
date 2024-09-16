@@ -16,13 +16,38 @@ unnecessary_services:
   - name: telnet
   - name: ftp
 
-# vars file for network security
+
+# Vars for network security
 
 firewall_rules:
+  # Allow SSH access on port 22 using the TCP protocol
   - rule: allow
-    port: 22
+    port: '22'
     proto: tcp
+    state: enabled  
+
+  # Example: Allow HTTP traffic on port 80 (if needed)
+  # Uncomment the following lines if you want to allow HTTP
+  - rule: allow
+    port: '80'
+    proto: tcp
+    state: enabled
+
+  # Example: Allow HTTPS traffic on port 443 (if needed)
+  # Uncomment the following lines if you want to allow HTTPS
+  - rule: allow
+    port: '443'
+    proto: tcp
+    state: enabled
+
+
+  # Deny all other incoming traffic (for both TCP and UDP)
   - rule: deny
+    port: '1:65535'
+    proto: tcp
+    state: enabled
 
-sshd_config_path: /etc/ssh/sshd_config
-
+  - rule: deny
+    port: '1:65535'
+    proto: udp
+    state: enabled

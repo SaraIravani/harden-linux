@@ -1,0 +1,47 @@
+---
+- name: Set appropriate permissions for critical directories
+  file:
+    path: "{{ item.path }}"
+    mode: "{{ item.mode }}"
+    recurse: yes
+  loop: "{{ directory_permissions }}"
+  tags: directories
+
+- name: Set appropriate permissions for files
+  file:
+    path: "{{ item.path }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ file_permissions }}"
+  tags: files
+
+- name: Configure umask
+  lineinfile:
+    path: "{{ profile_path }}"
+    regexp: '^umask'
+    line: 'umask {{ umask_value }}'
+  # Tags applied here, at the task level
+  tags: umask
+
+- name: Find private key files
+  find:
+    paths: "{{ private_key_path }}"
+    patterns: "*.key"
+  register: key_files
+  tags: private_keys
+
+- name: Set permissions for private key files
+  file:
+    path: "{{ item.path }}"
+    mode: "{{ private_key_mode }}"
+  loop: "{{ key_files.files }}"
+  tags: private_keys
+
+- name: Ensure correct ownership for sensitive directories
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    recurse: yes
+  loop: "{{ sensitive_directories }}"
+  tags: ownership
+

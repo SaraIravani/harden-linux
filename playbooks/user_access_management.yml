@@ -4,6 +4,7 @@
   become: yes
 
   roles:
+<<<<<<< HEAD
     - role: harden-linux
       vars:
         import_user_access_management: true  # user and access management tasks run
@@ -11,4 +12,7 @@
         import_password_policies: false      # Skips password policy tasks
         include_service_management: false    # Skips service management tasks
         include_network_security: false      # Skips network security tasks
+=======
+    - harden-linux  
+>>>>>>> backup-branch
 

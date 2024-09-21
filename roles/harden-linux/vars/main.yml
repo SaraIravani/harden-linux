@@ -16,6 +16,7 @@ unnecessary_services:
   - name: telnet
   - name: ftp
 
+<<<<<<< HEAD
 
 # Vars for network security
 
@@ -51,3 +52,39 @@ firewall_rules:
     port: '1:65535'
     proto: udp
     state: enabled
+=======
+# vars file for network security
+
+firewall_rules:
+  - rule: allow
+    port: 22
+    proto: tcp
+  - rule: deny
+
+sshd_config_path: /etc/ssh/sshd_config
+
+# Variables for permissions
+file_permissions:
+  - { path: '/etc/ssh', mode: '0700' }  # Example: SSH directory
+  - { path: '/var/log', mode: '0750' }  # Example: Logs directory
+  - { path: '/etc/passwd', mode: '0644' }  # Example: System file
+
+directory_permissions:  # Ensure this variable is defined
+  - { path: '/etc', mode: '0755' }
+  - { path: '/var', mode: '0755' }
+
+umask_value: '027'
+
+# Directory and mode for private key files
+private_key_path: "/etc"
+private_key_mode: '0600'
+
+# Ownership for sensitive directories
+sensitive_directories:
+  - { path: '/etc', owner: 'root', group: 'root' }
+  - { path: '/var', owner: 'root', group: 'root' }
+
+# Path for umask configuration
+profile_path: "/etc/profile"
+  
+>>>>>>> backup-branch

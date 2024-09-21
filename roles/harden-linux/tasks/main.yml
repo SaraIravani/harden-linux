@@ -40,3 +40,7 @@
 - name: Include network security tasks
   import_tasks: network_security.yml
   when: include_network_security | default(false) 
+
+- name: Include file permissions tasks
+  import_tasks: file_permissions.yml
+  when: include_file_permissions | default(false)

@@ -1,7 +1,7 @@
 ---
 # tasks file for harden-linux
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
 # Set timezone (conditionally included)
 - name: Set timezone
   community.general.timezone:
@@ -10,7 +10,7 @@
   become: true
 
 # Tasks for User and Access Management (conditionally included)
-=======
+#=======
 - name: Set timezone
   community.general.timezone:
     name: "{{ timezone }}"
@@ -18,7 +18,7 @@
 
 # Tasks for User and Access Management
 
->>>>>>> backup-branch
+#>>>>>>> backup-branch
 - name: Disable root login via SSH
   lineinfile:
     path: "{{ ssh_config_path }}"
@@ -26,26 +26,26 @@
     line: "PermitRootLogin {{ permit_root_login }}"
   notify:
     - Restart SSH
-<<<<<<< HEAD
+#<<<<<<< HEAD
   when: import_user_access_management | default(false)
   become: true
 
 # Tasks for Password Policies (conditionally included)
-=======
+#=======
   become: true
 
 # Tasks for Password Policies
 
->>>>>>> backup-branch
+#>>>>>>> backup-branch
 - name: Enforce minimum password length in PAM
   lineinfile:
     path: "{{ pam_password_conf_path }}"
     regexp: '^password requisite pam_pwquality.so'
     line: 'password requisite pam_pwquality.so minlen={{ min_password_length }}'
-<<<<<<< HEAD
+#<<<<<<< HEAD
   when: import_password_policies | default(false)
-=======
->>>>>>> backup-branch
+#=======
+#>>>>>>> backup-branch
   become: true
 
 - name: Enforce max repeat characters in PAM
@@ -53,7 +53,7 @@
     path: "{{ pam_password_conf_path }}"
     regexp: '^password requisite pam_pwquality.so'
     line: 'password requisite pam_pwquality.so minlen={{ min_password_length }} maxrepeat={{ max_repeat_characters }}'
-<<<<<<< HEAD
+#<<<<<<< HEAD
   when: import_password_policies | default(false)
   become: true
 
@@ -67,7 +67,7 @@
   import_tasks: network_security.yml
   when: include_network_security | default(false)
 
-=======
+#=======
   become: true
 
 - name: Include service management tasks
@@ -81,4 +81,10 @@
 - name: Include file permissions tasks
   import_tasks: file_permissions.yml
   when: include_file_permissions | default(false)
->>>>>>> backup-branch
+#>>>>>>> backup-branch
+
+- name: Include system auditing tasks
+  import_tasks: system_auditing.yml
+  when: include_system_auditing | default(false)
+
+

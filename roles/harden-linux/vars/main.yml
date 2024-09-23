@@ -16,10 +16,8 @@ unnecessary_services:
   - name: telnet
   - name: ftp
 
-<<<<<<< HEAD
 
 # Vars for network security
-
 firewall_rules:
   # Allow SSH access on port 22 using the TCP protocol
   - rule: allow
@@ -52,7 +50,7 @@ firewall_rules:
     port: '1:65535'
     proto: udp
     state: enabled
-=======
+#=======
 # vars file for network security
 
 firewall_rules:
@@ -87,4 +85,9 @@ sensitive_directories:
 # Path for umask configuration
 profile_path: "/etc/profile"
   
->>>>>>> backup-branch
+#>>>>>>> backup-branch
+
+auditd_package: auditd
+rsyslog_config_path: /etc/rsyslog.conf
+secure_log_file: /var/log/secure
+rsyslog_authpriv_regex: '^authpriv.*'

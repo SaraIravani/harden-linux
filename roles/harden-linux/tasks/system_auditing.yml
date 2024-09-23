@@ -1,61 +1,12 @@
-# System Logging (rsyslog)
-- name: Enable and configure system logging
+# Set up basic system logging using variables
+- name: Enable and configure basic system logging
   lineinfile:
-    path: /etc/rsyslog.conf
-    regexp: '^authpriv.*'
-    line: 'authpriv.* /var/log/secure'
-
-- name: Ensure rsyslog is running
-  service:
-    name: rsyslog
-    state: started
-    enabled: yes
-
-# Auditd Installation and Configuration
-- name: Install auditd
+    path: "{{ rsyslog_config_path }}"
+    regexp: "{{ rsyslog_authpriv_regex }}"
+    line: "authpriv.* {{ secure_log_file }}"
+    
+# Install basic audit tool using variable for package name
+- name: Install auditd package
   apt:
-    name: auditd
+    name: "{{ auditd_package }}"
     state: present
-
-- name: Configure audit rules
-  copy:
-    dest: /etc/audit/rules.d/audit.rules
-    content: |
-      -a always,exit -F arch=b64 -S execve -k privileged-commands
-      -w /etc/passwd -p wa -k identity
-      -w /etc/shadow -p wa -k identity
-      -w /var/log/secure -p wa -k logins
-      -w /var/log/audit/ -p wa -k auditlog
-
-- name: Restart auditd
-  service:
-    name: auditd
-    state: restarted
-
-# File Integrity Monitoring (AIDE)
-- name: Install AIDE for file integrity monitoring
-  apt:
-    name: aide
-    state: present
-
-- name: Initialize AIDE database
-  command: aideinit
-
-- name: Schedule regular AIDE checks
-  cron:
-    name: "AIDE daily check"
-    job: "aide --check"
-    hour: 3
-    minute: 0
-
-# SSH Access Monitoring
-- name: Log all SSH login attempts
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^#?LogLevel'
-    line: 'LogLevel VERBOSE'
-
-- name: Restart SSH service
-  service:
-    name: ssh
-    state: restarted

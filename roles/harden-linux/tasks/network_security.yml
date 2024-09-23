@@ -4,7 +4,7 @@
 - name: Ensure UFW is installed
   apt:
     name: ufw
-<<<<<<< HEAD
+#<<<<<< HEAD
     state: present
     update_cache: yes
 
@@ -16,16 +16,15 @@
     state: enabled
   loop: "{{ firewall_rules }}"
   when: item.port == '22'
-=======
-    state: enabled
-    update_cache: yes
->>>>>>> backup-branch
+    #    state: enabled
+    #    update_cache: yes
+#>>>>>> backup-branch
 
 - name: Enable UFW
   ufw:
     state: enabled
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
 - name: Configure allowed firewall rules
   ufw:
     rule: "{{ item.rule }}"
@@ -57,7 +56,7 @@
 - name: Secure SSH settings
   lineinfile:
     path: "{{ ssh_config_path }}"
-=======
+#=======
 - name: Configure firewall rules
   ufw:
     rule: "{{ item.rule }}"
@@ -69,7 +68,7 @@
 - name: Secure SSH settings
   lineinfile:
     path: "{{ sshd_config_path }}"
->>>>>>> backup-branch
+#>>>>>>> backup-branch
     regexp: '^PasswordAuthentication'
     line: 'PasswordAuthentication no'
   notify:

@@ -1,12 +1,11 @@
 ---
-- name: Advanced Security Configurations
+- name: kernel_os_hardening
   hosts: all
   become: yes
   roles:
     - role: harden-linux
   vars:
-    include_advanced_security: true
-    include_kernel_os_hardening: false
+    include_kernel_os_hardening: true
     include_system_auditing: false
     include_file_permission: false
     include_network_security: false

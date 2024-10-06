@@ -1,0 +1,12 @@
+- name: Apply basic kernel parameters
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+  loop: "{{ kernel_parameters }}"
+
+- name: Ensure the latest kernel version
+  apt:
+    name: "{{ kernel_package }}"
+    state: latest
+  when: ansible_os_family == "Debian"

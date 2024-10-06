@@ -8,3 +8,9 @@
     name: ssh
     state: restarted
 
+# Advanced security
+- name: Restart fail2ban
+  service:
+    name: fail2ban
+    state: restarted
+

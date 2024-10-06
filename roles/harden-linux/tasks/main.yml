@@ -87,4 +87,12 @@
   import_tasks: system_auditing.yml
   when: include_system_auditing | default(false)
 
+- name: Include kernel os hardening  tasks
+  import_tasks: kernel_os_hardening.yml 
+  when: include_kernel_os_hardening | default(false)
 
+
+- name: Include advanced security  tasks
+  import_tasks: advanced_security.yml
+  when: include_advanced_security | default(false)
+    

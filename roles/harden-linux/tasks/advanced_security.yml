@@ -1,0 +1,27 @@
+---
+- name: Enable SELinux
+  selinux:
+    state: "{{ selinux_state }}"
+    policy: default 
+  tags:
+    - selinux
+    - security
+
+- name: Install and configure Fail2Ban
+  apt:
+    name: "{{ fail2ban_package }}"
+    state: present
+  when: fail2ban_enabled
+  notify:
+    - Restart fail2ban
+  tags:
+    - fail2ban
+    - security
+
+- name: Configure Fail2Ban
+  template:
+    src: "{{ fail2ban_config_template }}"
+    dest: "{{ fail2ban_config_dest }}"
+  when: fail2ban_enabled
+  tags:
+    - fail2ban  

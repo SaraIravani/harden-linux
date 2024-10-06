@@ -91,3 +91,21 @@ auditd_package: auditd
 rsyslog_config_path: /etc/rsyslog.conf
 secure_log_file: /var/log/secure
 rsyslog_authpriv_regex: '^authpriv.*'
+
+
+# Variables for Kernel and OS-Level Hardening
+kernel_parameters:
+  - { name: 'net.ipv4.ip_forward', value: '0' }
+  - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+
+# Package for kernel management
+kernel_package: linux-image-generic
+
+# Variables for Advanced Security Configurations
+#selinux_state: "enforcing"  # State of SELinux
+selinux_state: "permissive"  # allowing you to see how it might affect your system without breaking anything  
+fail2ban_enabled: true       # Enable or disable Fail2Ban
+fail2ban_package: "fail2ban"  # Package name for Fail2Ban
+fail2ban_config_template: "fail2ban.j2"  # Jinja2 template for Fail2Ban configuration
+fail2ban_config_dest: "/etc/fail2ban/jail.local"  # Destination for the Fail2Ban configuration
+    

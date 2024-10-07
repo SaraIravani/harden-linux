@@ -1,0 +1,22 @@
+---
+- name: Apply basic CIS Benchmark settings
+  command: cis-benchmark
+
+- name: Gather package facts  
+  package_facts:
+
+
+- name: Verify critical services are running    
+  service:
+    name: "{{ item }}"
+    state: started
+  loop: "{{critical_services}}"
+  when: "'{{ item }}' in ansible_facts.packages"  
+  
+- name: Reboot system after applying CIS Benchmark settings
+  reboot:
+    module: reboot
+    msg: "{{reboot_message}}"
+    reboot_timeout: "{{ reboot_timeout }}"
+  when: ansible_facts['os_family'] == 'Debian'
+  delegate_to: localhost

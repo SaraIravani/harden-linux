@@ -95,4 +95,8 @@
 - name: Include advanced security  tasks
   import_tasks: advanced_security.yml
   when: include_advanced_security | default(false)
+
+- name: Include compliance  tasks
+  import_tasks: compliance.yml
+  when: include_compliance | default(false)
     

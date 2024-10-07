@@ -14,3 +14,9 @@
     name: fail2ban
     state: restarted
 
+# compliance 
+- name: Verify critical services are running
+  service:
+    name: "{{ item }}"
+    state: started
+  loop: "{{ critical_services }}"

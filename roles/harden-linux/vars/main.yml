@@ -85,7 +85,6 @@ sensitive_directories:
 # Path for umask configuration
 profile_path: "/etc/profile"
   
-#>>>>>>> backup-branch
 
 auditd_package: auditd
 rsyslog_config_path: /etc/rsyslog.conf
@@ -94,18 +93,35 @@ rsyslog_authpriv_regex: '^authpriv.*'
 
 
 # Variables for Kernel and OS-Level Hardening
+# --------------------------------------------
 kernel_parameters:
   - { name: 'net.ipv4.ip_forward', value: '0' }
   - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+#---------------------------------------------
 
 # Package for kernel management
+# --------------------------------------------
 kernel_package: linux-image-generic
+#---------------------------------------------  
 
 # Variables for Advanced Security Configurations
+# ---------------------------------------------
 #selinux_state: "enforcing"  # State of SELinux
 selinux_state: "permissive"  # allowing you to see how it might affect your system without breaking anything  
 fail2ban_enabled: true       # Enable or disable Fail2Ban
 fail2ban_package: "fail2ban"  # Package name for Fail2Ban
 fail2ban_config_template: "fail2ban.j2"  # Jinja2 template for Fail2Ban configuration
 fail2ban_config_dest: "/etc/fail2ban/jail.local"  # Destination for the Fail2Ban configuration
-    
+#-------------------------------------------------------
+  
+# Variables for complaince
+# -------------------------------------------------------
+reboot_message: "Rebooting after applying CSI compliance"
+reboot_timeout: 300
+
+# List of critical services to check
+critical_services:
+  - ssh
+  - apache2
+  - mysql  
+#-------------------------------------------------------   

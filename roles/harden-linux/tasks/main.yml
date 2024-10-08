@@ -1,14 +1,11 @@
 ---
 # tasks file for harden-linux
 
-#<<<<<<< HEAD
 # Set timezone (conditionally included)
-- name: Set timezone
-  community.general.timezone:
-    name: "{{ timezone }}"
+- name: Include timezone tasks
+  import_tasks: base.yml
   when: import_timezone | default(false)
-  become: true
-
+    
 # Tasks for User and Access Management (conditionally included)
 #=======
 - name: Set timezone

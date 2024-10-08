@@ -1,0 +1,6 @@
+# Set timezone (conditionally included)
+- name: Set timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
+  when: import_timezone | default(false)
+  become: true

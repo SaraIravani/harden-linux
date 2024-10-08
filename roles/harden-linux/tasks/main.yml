@@ -1,6 +1,10 @@
 ---
 # tasks file for harden-linux
 
+- name: Include initial assessment tasks
+  import_tasks: initial_assessment.yml
+  when: include_initial_assessment | default(false)
+
 # Set timezone (conditionally included)
 - name: Include timezone tasks
   import_tasks: base.yml

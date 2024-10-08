@@ -2,24 +2,16 @@
 - name: Initial System Assessment
   hosts: all
   become: yes
-
-  tasks:
-    - name: Gather system information
-      setup:
-
-    - name: Check installed packages
-      command: dpkg --list
-      register: installed_packages
-
-    - name: Display installed packages
-      debug:
-        msg: "{{ installed_packages.stdout_lines }}"
-
-    - name: Check current kernel version
-      command: uname -r
-      register: kernel_version
-
-    - name: Display kernel version
-      debug:
-        msg: "Current kernel version: {{ kernel_version.stdout }}"
-
+  roles:
+    - role: harden-linux
+  vars:
+    include_initial_assessment: true
+    include_advanced_security: false
+    include_kernel_os_hardening: false
+    include_system_auditing: false
+    include_file_permission: false
+    include_network_security: false
+    include_service_management: false
+    import_timezone: false
+    import_user_access_management: false
+    import_password_policies: false

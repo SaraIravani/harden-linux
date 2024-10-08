@@ -1,0 +1,19 @@
+---
+- name: Gather system information
+  setup:
+
+- name: Check installed packages
+  command: dpkg --list
+  register: installed_packages
+
+- name: Display installed packages
+  debug:
+    msg: "{{ installed_packages.stdout_lines }}"
+
+- name: Check current kernel version
+  command: uname -r
+  register: kernel_version
+
+- name: Display kernel version
+  debug:
+    msg: "Current kernel version: {{ kernel_version.stdout }}"

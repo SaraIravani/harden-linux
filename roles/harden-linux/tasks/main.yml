@@ -18,21 +18,9 @@
 # Tasks for Password Policies (conditionally included)
 
 # Tasks for Password Policies
-- name: Enforce minimum password length in PAM
-  lineinfile:
-    path: "{{ pam_password_conf_path }}"
-    regexp: '^password requisite pam_pwquality.so'
-    line: 'password requisite pam_pwquality.so minlen={{ min_password_length }}'
+- name: Include password_policies tasks
+  import_tasks: password_policies.yml
   when: import_password_policies | default(false)
-  become: true
-
-- name: Enforce max repeat characters in PAM
-  lineinfile:
-    path: "{{ pam_password_conf_path }}"
-    regexp: '^password requisite pam_pwquality.so'
-    line: 'password requisite pam_pwquality.so minlen={{ min_password_length }} maxrepeat={{ max_repeat_characters }}'
-  when: import_password_policies | default(false)
-  become: true
 
 - name: Include service management tasks
   import_tasks: service_management.yml

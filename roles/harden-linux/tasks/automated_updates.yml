@@ -1,0 +1,18 @@
+- name: Install unattended-upgrades package
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Enable automatic security updates
+  lineinfile:
+    path: "{{automatic_security_updates_path}}"
+    regexp: "{{ unattended_upgrade_regexp }}"
+    line: "{{Unattended_Upgrade}}"
+
+- name: Enable automatic updates for all packages
+  lineinfile:
+    path: "{{utomatic_updates_path}}"
+    line: "{{ periodic_unattended_upgrade }}"
+
+  notify:
+    -  unattended-upgrades

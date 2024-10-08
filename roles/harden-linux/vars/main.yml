@@ -124,4 +124,13 @@ critical_services:
   - ssh
   - apache2
   - mysql  
-#-------------------------------------------------------   
+#-------------------------------------------------------
+
+# Variables for automated updates
+# ------------------------------------------------------
+utomatic_updates_path: "/etc/apt/apt.conf.d/20auto-upgrades"
+automatic_security_updates_path: "/etc/apt/apt.conf.d/50unattended-upgrades"
+periodic_unattended_upgrade: 'APT::Periodic::Unattended-Upgrade "1";'
+Unattended_Upgrade: 'Unattended-Upgrade::Allowed-Origins { "Ubuntu focal-security"; };'
+unattended_upgrade_regexp: '^Unattended-Upgrade::Allowed-Origins'
+#--------------------------------------------------------

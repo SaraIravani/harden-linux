@@ -20,3 +20,10 @@
     name: "{{ item }}"
     state: started
   loop: "{{ critical_services }}"
+
+# automated updates
+- name: Ensure update services are started
+  service:
+      name: unattended-upgrades
+      state: started
+      enabled: yes

@@ -7,24 +7,11 @@
   when: import_timezone | default(false)
     
 # Tasks for User and Access Management (conditionally included)
-#=======
-- name: Set timezone
-  community.general.timezone:
-    name: "{{ timezone }}"
-  become: true
-- name: Disable root login via SSH
-  lineinfile:
-    path: "{{ ssh_config_path }}"
-    regexp: '^PermitRootLogin'
-    line: "PermitRootLogin {{ permit_root_login }}"
-  notify:
-    - Restart SSH
+- name: Include user access management tasks
+  import_tasks: user_access_management.yml
   when: import_user_access_management | default(false)
-  become: true
 
 # Tasks for Password Policies (conditionally included)
-#=======
-  become: true
 
 # Tasks for Password Policies
 - name: Enforce minimum password length in PAM

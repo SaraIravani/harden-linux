@@ -1,0 +1,7 @@
+- name: Disable root login via SSH
+  lineinfile:
+    path: "{{ ssh_config_path }}"
+    regexp: '^PermitRootLogin'
+    line: "PermitRootLogin {{ permit_root_login }}"
+  notify:
+    - Restart SSH

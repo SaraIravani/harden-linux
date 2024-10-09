@@ -1,4 +1,3 @@
-
 # Harden Linux Project
 
 The **Harden Linux** project is a comprehensive Ansible playbook suite designed to enhance the security and compliance of Linux systems. This project includes various configurations, automated updates, and monitoring solutions to help system administrators maintain secure environments.
@@ -96,11 +95,22 @@ The following steps represent the playbooks available in this project:
 
 ## Monitoring
 
-The monitoring step is crucial for maintaining an overview of your system's health and security. This step integrates with the **Prometheus** and **Grafana** stack, allowing you to visualize metrics and receive alerts on potential issues. Follow the instructions in the ansible-prometheus-grafana-stack repository for detailed setup instructions.
+The monitoring step is crucial for maintaining an overview of your system's health and security. This step integrates with the [ansible-prometheus-grafana-stack](https://github.com/yourusername/ansible-prometheus-grafana-stack) to set up monitoring for system performance and security.
 
-## License
+### Setup Instructions
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+Follow the instructions in the [ansible-prometheus-grafana-stack](https://github.com/SaraIravani/ansible-prometheus-grafana-stack.git) repository for detailed setup instructions.
+
+### Features
+
+- Visualize metrics from your Linux system.
+- Receive alerts on potential issues.
+- Monitor system performance and security.
+
+### License
+
+This integration is part of the Harden Linux project and follows the MIT License. See the LICENSE file for more details.
+
 
 ## Contributing
 
@@ -116,7 +126,7 @@ Contributions are welcome! Please submit a pull request or open an issue to disc
 For questions or feedback, feel free to reach out:
 
 - **Email**: sarairavani@outlook.com
-- **LinkedIn**: (https://www.linkedin.com/in/sara-iravan)
+- **LinkedIn**: (https://www.linkedin.com/in/sara-iravani)
 
 ---
 

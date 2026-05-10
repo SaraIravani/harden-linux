@@ -1,0 +1,3 @@
+---
+hardening_env: staging
+hardening_change_window: true

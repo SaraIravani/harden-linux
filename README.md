@@ -1,133 +1,68 @@
-# Harden Linux Project
+# harden-linux (Enterprise Refactor)
 
-The **Harden Linux** project is a comprehensive Ansible playbook suite designed to enhance the security and compliance of Linux systems. This project includes various configurations, automated updates, and monitoring solutions to help system administrators maintain secure environments.
+[![ansible-lint](https://github.com/SaraIravani/harden-linux/actions/workflows/ansible-lint.yml/badge.svg)](#)
+[![yamllint](https://github.com/SaraIravani/harden-linux/actions/workflows/yamllint.yml/badge.svg)](#)
+[![syntax-check](https://github.com/SaraIravani/harden-linux/actions/workflows/syntax-check.yml/badge.svg)](#)
+[![molecule](https://github.com/SaraIravani/harden-linux/actions/workflows/molecule.yml/badge.svg)](#)
 
-## Table of Contents
+Production-oriented Ansible automation for Linux baseline hardening with modular roles, CI validation, and safe operational controls.
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Prerequisites](#prerequisites)
-4. [Installation](#installation)
-5. [Playbook Steps](#playbook-steps)
-6. [Monitoring](#monitoring)
-7. [License](#license)
-8. [Contributing](#contributing)
-9. [Acknowledgments](#acknowledgments)
-10. [Contact](#contact)
+## Architecture Overview
+- `site.yml` orchestrates composable security roles.
+- Role defaults are overridable through `group_vars` and environment inventories.
+- CI enforces syntax, linting, and Molecule scenario validation.
+- Structure is aligned for CIS-style controls and enterprise GitOps pipelines.
 
-## Overview
+## Supported Distributions
+- Ubuntu/Debian family
+- RHEL-compatible family (RHEL, Rocky, AlmaLinux)
 
-This project aims to automate the hardening of Linux systems using Ansible. The playbooks included in this repository help in the implementation of security best practices, configuration management, and compliance requirements.
+## Project Structure
+- `inventories/` staging/production inventory split
+- `group_vars/` global and env-specific variables
+- `host_vars/` per-host overrides
+- `roles/` reusable hardening controls
+- `molecule/` local role/playbook validation scenario
+- `tests/` compliance test placeholders
+- `docs/` architecture and operations docs
+- `.github/workflows/` CI gates
+- `collections/` local collections path
 
-## Features
+## Execution Examples
+```bash
+ansible-galaxy collection install -r requirements.yml
+ansible-playbook -i inventories/staging/hosts.yml site.yml --check --diff
+ansible-playbook -i inventories/production/hosts.yml site.yml --limit prod-web-01
+```
 
-- Initial assessment of the system
-- Automated security updates
-- User access management
-- Password policies
-- Service management
-- Network security
-- File permissions management
-- System auditing
-- Kernel OS hardening
-- Advanced security configurations
-- Compliance checks
-- Monitoring with Prometheus and Grafana
+## Inventory Example
+```yaml
+all:
+  children:
+    linux:
+      hosts:
+        prod-web-01:
+          ansible_host: 198.51.100.10
+          ansible_user: ansible
+```
 
-## Prerequisites
+## Security Warning
+Apply SSH and firewall controls in maintenance windows. Always run `--check` first and ensure out-of-band access (console/IPMI) to avoid lockout during first rollout.
 
-- Ansible installed on your control machine
-- Access to the target Linux systems via SSH
-- Properly configured inventory file
-- Required roles and collections installed (see `ansible.cfg` for details)
+## Molecule
+```bash
+pip install ansible molecule molecule-plugins[docker] docker
+molecule test
+```
 
-## Installation
+## CIS Alignment
+This project maps to core CIS Linux concepts including SSH daemon hardening, firewall defaults, password quality, audit logging, sysctl tuning, and patch automation. Validate with your internal benchmark profile and control IDs.
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/yourusername/harden-linux.git
-   cd harden-linux
-   ```
+## Rollback Considerations
+- SSH config writes include backups.
+- Prefer staged rollout by inventory group.
+- Keep break-glass access and console login tested.
 
-2. Edit the `inventory/hosts.ini` file to specify your target hosts.
-
-3. Update `ansible.cfg` with your desired configurations.
-
-## Playbook Steps
-
-The following steps represent the playbooks available in this project:
-
-1. **Initial Assessment**: `initial_assessment.yml`  
-   Conducts a preliminary assessment of the system's security posture.
-
-2. **Base Configuration**: `base.yml`  
-   Sets up essential configurations and packages on the Linux system.
-
-3. **User Access Management & Password Policies**: `user_access_management.yml` and `password_policies.yml`  
-   Manages user access levels and implements strong password policies.
-
-4. **Service Management**: `service_management.yml`  
-   Configures services based on user group requirements.
-
-5. **Network Security**: `network_security.yml`  
-   Implements network security policies to safeguard the system.
-
-6. **File Permissions Management**: `file_permissions.yml`  
-   Ensures correct file permissions to protect sensitive data.
-
-7. **System Auditing**: `system_auditing.yml`  
-   Sets up auditing mechanisms to track system changes.
-
-8. **Kernel OS Hardening**: `kernel_os_hardening.yml`  
-   Applies kernel hardening techniques to improve security.
-
-9. **Advanced Security Configurations**: `advanced_security.yml`  
-   Configures additional security features, such as Fail2Ban.
-
-10. **Compliance Checks**: `compliance.yml`  
-    Performs compliance checks against established security benchmarks.
-
-11. **Monitoring**: `monitoring.yml`  
-    Integrates with ansible-prometheus-grafana-stack to set up monitoring for system performance and security.
-
-12. **Automated Security Updates**: `automated_updates.yml`  
-    Configures unattended upgrades for security patches and system updates.
-
-## Monitoring
-
-The monitoring step is crucial for maintaining an overview of your system's health and security. This step integrates with the [ansible-prometheus-grafana-stack](https://github.com/yourusername/ansible-prometheus-grafana-stack) to set up monitoring for system performance and security.
-
-### Setup Instructions
-
-Follow the instructions in the [ansible-prometheus-grafana-stack](https://github.com/SaraIravani/ansible-prometheus-grafana-stack.git) repository for detailed setup instructions.
-
-### Features
-
-- Visualize metrics from your Linux system.
-- Receive alerts on potential issues.
-- Monitor system performance and security.
-
-### License
-
-This integration is part of the Harden Linux project and follows the MIT License. See the LICENSE file for more details.
-
-
-## Contributing
-
-Contributions are welcome! Please submit a pull request or open an issue to discuss improvements.
-
-## Acknowledgments
-
-- Inspired by the need for enhanced Linux security practices.
-- Special thanks to the open-source community for their contributions.
-
-## Contact
-
-For questions or feedback, feel free to reach out:
-
-- **Email**: sarairavani@outlook.com
-- **LinkedIn**: (https://www.linkedin.com/in/sara-iravani)
-
----
-
-Happy Hardening!
+## Diagrams/Screenshots
+- `docs/architecture-diagram.png` (placeholder)
+- `docs/pipeline-screenshot.png` (placeholder)

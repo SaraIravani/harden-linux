@@ -1,0 +1,10 @@
+---
+- name: Apply CIS-aligned sysctl settings
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    reload: true
+  loop: "{{ sysctl_hardening_params | dict2items }}"
+  tags: [sysctl, cis]

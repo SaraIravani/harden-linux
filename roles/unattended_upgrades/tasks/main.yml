@@ -1,0 +1,18 @@
+---
+- name: Manage unattended upgrades on Debian family
+  when: ansible_os_family == 'Debian' and hardening_manage_unattended_upgrades | bool
+  block:
+    - ansible.builtin.package:
+        name:
+          - unattended-upgrades
+          - apt-listchanges
+        state: present
+    - ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/20auto-upgrades
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unattended-Upgrade "1";
+  tags: [patching]

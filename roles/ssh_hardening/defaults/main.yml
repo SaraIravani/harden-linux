@@ -1,0 +1,6 @@
+---
+ssh_hardening_port: "{{ hardening_ssh_port | default(22) }}"
+ssh_hardening_permit_root_login: "{{ hardening_sshd_permit_root_login | default('no') }}"
+ssh_hardening_password_authentication: "{{ (not hardening_disable_password_auth | default(true)) | ternary('yes','no') }}"
+ssh_hardening_allowed_groups: "{{ hardening_allowed_ssh_groups | default(['sysadmin']) }}"
+ssh_hardening_validate_sshd: "/usr/sbin/sshd -t -f %s"

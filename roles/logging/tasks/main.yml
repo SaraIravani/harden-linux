@@ -1,0 +1,12 @@
+---
+- name: Ensure rsyslog installed and enabled
+  ansible.builtin.package:
+    name: rsyslog
+    state: present
+  tags: [logging]
+
+- ansible.builtin.service:
+    name: rsyslog
+    enabled: true
+    state: started
+  tags: [logging]

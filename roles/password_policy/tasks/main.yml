@@ -1,0 +1,16 @@
+---
+- name: Configure pwquality for strong passwords
+  ansible.builtin.copy:
+    dest: /etc/security/pwquality.conf
+    content: |
+      minlen = 14
+      dcredit = -1
+      ucredit = -1
+      lcredit = -1
+      ocredit = -1
+      retry = 3
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+  tags: [password, cis]

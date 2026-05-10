@@ -1,0 +1,3 @@
+---
+hardening_env: production
+hardening_change_window: true

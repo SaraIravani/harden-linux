@@ -1,0 +1,8 @@
+---
+profile: production
+use_default_rules: true
+exclude_paths:
+  - .git/
+  - roles/gantsign.pwquality/
+warn_list:
+  - yaml[line-length]

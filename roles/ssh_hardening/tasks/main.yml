@@ -1,0 +1,26 @@
+---
+# WHY: validating sshd config before restart prevents remote lockout in automation failures.
+- name: Ensure OpenSSH server package is installed
+  ansible.builtin.package:
+    name: "{{ 'openssh-server' if ansible_os_family == 'Debian' else 'openssh-server' }}"
+    state: present
+  tags: [ssh, packages]
+
+- name: Deploy hardened sshd configuration
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0600'
+    backup: true
+    validate: "{{ ssh_hardening_validate_sshd }}"
+  notify: Restart ssh service safely
+  tags: [ssh, config]
+
+- name: Ensure ssh service enabled and started
+  ansible.builtin.service:
+    name: "{{ 'ssh' if ansible_os_family == 'Debian' else 'sshd' }}"
+    enabled: true
+    state: started
+  tags: [ssh, service]

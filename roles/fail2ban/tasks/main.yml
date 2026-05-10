@@ -1,0 +1,21 @@
+---
+- name: Install fail2ban package
+  ansible.builtin.package:
+    name: fail2ban
+    state: present
+  tags: [fail2ban]
+
+- name: Configure fail2ban jail for sshd
+  ansible.builtin.copy:
+    dest: /etc/fail2ban/jail.d/sshd.local
+    owner: root
+    group: root
+    mode: '0640'
+    content: |
+      [sshd]
+      enabled = true
+      maxretry = 5
+      findtime = 10m
+      bantime = 1h
+  notify: Restart fail2ban
+  tags: [fail2ban]

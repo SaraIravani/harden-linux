@@ -1,0 +1,34 @@
+---
+- name: Enterprise Linux hardening baseline
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    hardening_phase: enforce
+  pre_tasks:
+    - name: Validate supported operating system families
+      ansible.builtin.assert:
+        that:
+          - ansible_os_family in ["Debian", "RedHat"]
+        fail_msg: "Unsupported OS family: {{ ansible_os_family }}"
+      tags: [always, validation]
+
+  roles:
+    - role: sysctl_hardening
+      tags: [sysctl, cis]
+    - role: ssh_hardening
+      tags: [ssh, cis]
+    - role: firewall
+      tags: [firewall, network]
+    - role: password_policy
+      tags: [password, auth]
+    - role: auditd
+      tags: [auditd, logging, cis]
+    - role: fail2ban
+      tags: [fail2ban, ssh, auth]
+    - role: logging
+      tags: [logging, rsyslog]
+    - role: unattended_upgrades
+      tags: [patching]
+    - role: kernel_hardening
+      tags: [kernel, cis]

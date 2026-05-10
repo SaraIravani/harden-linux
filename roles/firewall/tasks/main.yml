@@ -1,0 +1,32 @@
+---
+- name: Configure UFW on Debian family
+  when: ansible_os_family == 'Debian' and hardening_manage_firewall | bool
+  block:
+    - ansible.builtin.package:
+        name: ufw
+        state: present
+    - community.general.ufw:
+        rule: allow
+        port: "{{ hardening_ssh_port | default(22) }}"
+        proto: tcp
+    - community.general.ufw:
+        state: enabled
+        policy: deny
+  tags: [firewall]
+
+- name: Configure firewalld on RedHat family
+  when: ansible_os_family == 'RedHat' and hardening_manage_firewall | bool
+  block:
+    - ansible.builtin.package:
+        name: firewalld
+        state: present
+    - ansible.builtin.service:
+        name: firewalld
+        enabled: true
+        state: started
+    - ansible.posix.firewalld:
+        service: ssh
+        permanent: true
+        state: enabled
+        immediate: true
+  tags: [firewall]

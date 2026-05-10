@@ -1,0 +1,10 @@
+---
+- name: Disable core dumps for non-privileged users
+  ansible.builtin.copy:
+    dest: /etc/security/limits.d/99-hardening.conf
+    content: |
+      * hard core 0
+    owner: root
+    group: root
+    mode: '0644'
+  tags: [kernel, cis]

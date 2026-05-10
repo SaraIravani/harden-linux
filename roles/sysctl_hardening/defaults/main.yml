@@ -1,0 +1,6 @@
+---
+sysctl_hardening_params:
+  net.ipv4.ip_forward: 0
+  net.ipv4.conf.all.accept_redirects: 0
+  net.ipv4.conf.all.send_redirects: 0
+  net.ipv4.conf.all.rp_filter: 1

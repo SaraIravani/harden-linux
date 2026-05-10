@@ -1,0 +1,13 @@
+# Managed by Ansible - SSH baseline aligned with CIS recommendations.
+Port {{ ssh_hardening_port }}
+Protocol 2
+PermitRootLogin {{ ssh_hardening_permit_root_login }}
+PasswordAuthentication {{ ssh_hardening_password_authentication }}
+PermitEmptyPasswords no
+PubkeyAuthentication yes
+X11Forwarding no
+MaxAuthTries 4
+ClientAliveInterval 300
+ClientAliveCountMax 2
+AllowGroups {{ ssh_hardening_allowed_groups | join(' ') }}
+Subsystem sftp /usr/lib/openssh/sftp-server

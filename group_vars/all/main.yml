@@ -1,0 +1,9 @@
+---
+hardening_manage_firewall: true
+hardening_allowed_ssh_groups: ["sysadmin"]
+hardening_ssh_port: 22
+hardening_disable_password_auth: true
+hardening_sshd_permit_root_login: "no"
+hardening_manage_unattended_upgrades: true
+hardening_time_sync_ntp_servers:
+  - pool.ntp.org

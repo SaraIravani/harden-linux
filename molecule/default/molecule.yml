@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: ubuntu-2204
+    image: geerlingguy/docker-ubuntu2204-ansible
+    privileged: true
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../../site.yml
+scenario:
+  name: default
+verifier:
+  name: ansible

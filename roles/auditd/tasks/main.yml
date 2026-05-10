@@ -1,0 +1,13 @@
+---
+- name: Install and enable auditd
+  ansible.builtin.package:
+    name: auditd
+    state: present
+  tags: [auditd]
+
+- name: Ensure auditd service is enabled
+  ansible.builtin.service:
+    name: auditd
+    enabled: true
+    state: started
+  tags: [auditd]

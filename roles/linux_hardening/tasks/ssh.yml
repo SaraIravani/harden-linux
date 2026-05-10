@@ -1,0 +1,20 @@
+---
+- name: Backup existing sshd_config before hardening
+  ansible.builtin.copy:
+    src: "{{ hardening_sshd_config_file }}"
+    dest: "{{ hardening_sshd_config_file }}{{ hardening_sshd_backup_suffix }}"
+    remote_src: true
+    mode: preserve
+  when: not hardening_audit_mode | bool
+
+- name: Deploy secure sshd_config
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: "{{ hardening_sshd_config_file }}"
+    owner: root
+    group: root
+    mode: '0600'
+    backup: true
+    validate: '/usr/sbin/sshd -t -f %s'
+  notify: restart ssh
+  when: not hardening_audit_mode | bool

@@ -1,0 +1,21 @@
+---
+- name: restart ssh
+  ansible.builtin.service:
+    name: "{{ hardening_ssh_service[ansible_os_family] | default('sshd') }}"
+    state: restarted
+
+- name: restart fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: restarted
+  when: hardening_manage_fail2ban | bool
+
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: reboot if required
+  ansible.builtin.reboot:
+    msg: "Reboot triggered by Linux hardening role"
+    reboot_timeout: "{{ hardening_reboot_timeout }}"
+  when: hardening_reboot_allowed | bool

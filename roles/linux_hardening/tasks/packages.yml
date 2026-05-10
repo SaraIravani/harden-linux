@@ -1,0 +1,19 @@
+---
+- name: Install common hardening packages
+  ansible.builtin.package:
+    name: "{{ hardening_packages_common }}"
+    state: present
+
+- name: Install Debian hardening packages
+  ansible.builtin.apt:
+    name: "{{ hardening_packages_debian }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_os_family == 'Debian'
+
+- name: Install RedHat hardening packages
+  ansible.builtin.dnf:
+    name: "{{ hardening_packages_redhat }}"
+    state: present
+  when: ansible_os_family == 'RedHat'

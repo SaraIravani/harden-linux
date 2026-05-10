@@ -1,0 +1,34 @@
+---
+- name: Validate supported OS family
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family in ['Debian', 'RedHat']
+    fail_msg: "Unsupported OS family: {{ ansible_os_family }}"
+  tags: [always, validate]
+
+- name: Include preflight validation
+  ansible.builtin.import_tasks: validate.yml
+  tags: [always, validate]
+
+- name: Include package baseline
+  ansible.builtin.import_tasks: packages.yml
+  tags: [packages]
+
+- name: Include SSH hardening
+  ansible.builtin.import_tasks: ssh.yml
+  tags: [ssh, security]
+
+- name: Include firewall hardening
+  ansible.builtin.import_tasks: firewall.yml
+  when: hardening_manage_firewall | bool
+  tags: [firewall, network, security]
+
+- name: Include fail2ban hardening
+  ansible.builtin.import_tasks: fail2ban.yml
+  when: hardening_manage_fail2ban | bool
+  tags: [fail2ban, security]
+
+- name: Include sysctl hardening
+  ansible.builtin.import_tasks: sysctl.yml
+  when: hardening_apply_sysctl | bool
+  tags: [sysctl, kernel, security]

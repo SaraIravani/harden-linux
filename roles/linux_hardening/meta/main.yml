@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: harden-linux maintainers
+  description: Enterprise Linux baseline hardening role
+  license: MIT
+  min_ansible_version: '2.14'
+  platforms:
+    - name: Debian
+      versions: [all]
+    - name: EL
+      versions: [8, 9]
+dependencies: []

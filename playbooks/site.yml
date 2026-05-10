@@ -1,0 +1,17 @@
+---
+- name: Enterprise Linux hardening
+  hosts: linux
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    - name: Verify managed nodes use supported init system
+      ansible.builtin.assert:
+        that:
+          - ansible_service_mgr == 'systemd'
+        fail_msg: "This hardening framework requires systemd-managed hosts"
+      tags: [always, validate]
+
+  roles:
+    - role: linux_hardening
+      tags: [hardening]

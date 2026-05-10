@@ -1,0 +1,11 @@
+# Managed by Ansible - Fail2ban baseline
+[DEFAULT]
+bantime = 1h
+findtime = 10m
+maxretry = 5
+backend = systemd
+
+[sshd]
+enabled = true
+port = {{ hardening_ssh_port }}
+logpath = %(sshd_log)s

@@ -1,0 +1,12 @@
+---
+- name: Ensure at least one administrative SSH group is defined
+  ansible.builtin.assert:
+    that:
+      - hardening_ssh_allow_groups | length > 0
+    fail_msg: "hardening_ssh_allow_groups must contain at least one group to prevent lockout"
+
+- name: Ensure SSH port is valid
+  ansible.builtin.assert:
+    that:
+      - hardening_ssh_port | int >= 1
+      - hardening_ssh_port | int <= 65535

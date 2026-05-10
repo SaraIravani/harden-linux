@@ -1,0 +1,32 @@
+---
+- name: Configure UFW default deny incoming
+  community.general.ufw:
+    direction: incoming
+    policy: deny
+  when: ansible_os_family == 'Debian' and not hardening_audit_mode | bool
+
+- name: Configure UFW default allow outgoing
+  community.general.ufw:
+    direction: outgoing
+    policy: allow
+  when: ansible_os_family == 'Debian' and not hardening_audit_mode | bool
+
+- name: Allow approved TCP ports with UFW
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ hardening_allowed_tcp_ports }}"
+  when: ansible_os_family == 'Debian' and not hardening_audit_mode | bool
+
+- name: Ensure UFW is enabled
+  community.general.ufw:
+    state: enabled
+  when: ansible_os_family == 'Debian' and not hardening_audit_mode | bool
+
+- name: Ensure firewalld is enabled on RedHat
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+  when: ansible_os_family == 'RedHat' and not hardening_audit_mode | bool

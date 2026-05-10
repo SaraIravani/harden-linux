@@ -1,0 +1,8 @@
+---
+# Global hardening controls.
+hardening_manage_firewall: true
+hardening_manage_fail2ban: true
+hardening_apply_sysctl: true
+hardening_reboot_allowed: false
+hardening_reboot_timeout: 900
+hardening_audit_mode: true

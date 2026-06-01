@@ -74,7 +74,7 @@ Monitoring (Prometheus + Grafana)
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/<your-github-username>/harden-linux.git
+   git clone https://github.com/SaraIravani/harden-linux.git
    cd harden-linux
    ```
 

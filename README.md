@@ -43,7 +43,7 @@ This project automates Linux security hardening using Ansible by applying securi
 
 ## Architecture
 
-![Harden Linux Architecture]<img width="350" height="290" alt="image" src="https://github.com/user-attachments/assets/ed7a17d4-d8cb-4b1c-9356-8f22f70f3d41" />
+<img width="416" height="290" alt="image" src="https://github.com/user-attachments/assets/f2ca1b0f-4cba-456a-b307-ca513931b466" />
 
 ## Features
 

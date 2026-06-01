@@ -17,7 +17,36 @@ The **Harden Linux** project is a comprehensive Ansible playbook suite designed 
 
 ## Overview
 
-This project aims to automate the hardening of Linux systems using Ansible. The playbooks included in this repository help in the implementation of security best practices, configuration management, and compliance requirements.
+This project automates Linux security hardening using Ansible by applying security best practices, compliance checks, monitoring, and system configuration controls. It is designed to help administrators consistently secure multiple Linux servers through Infrastructure as Code principles.
+
+## Design Decisions
+
+This project was designed using a role-based Ansible architecture to keep security controls modular, reusable, and easy to maintain.
+
+Instead of implementing all hardening tasks in a single playbook, each security domain is separated into dedicated roles and playbooks such as user management, password policies, network security, auditing, and kernel hardening.
+
+This approach improves maintainability, simplifies troubleshooting, and allows individual hardening components to be reused across different Linux environments.
+
+The hardening controls are inspired by industry-standard security practices and common Linux security benchmarks such as CIS recommendations. The goal is to make Linux hardening repeatable, auditable, and scalable through Infrastructure as Code.
+
+## Architecture
+
+The project follows a centralized automation model where an Ansible control node securely connects to target Linux servers through SSH and applies security configurations.
+
+Control Node (Ansible)
+        |
+        | SSH
+        v
+Target Linux Hosts
+        |
+        v
+Security Hardening
+(User Access, Password Policies,
+Network Security, Auditing,
+Kernel Hardening, Compliance)
+        |
+        v
+Monitoring (Prometheus + Grafana)
 
 ## Features
 
@@ -45,7 +74,7 @@ This project aims to automate the hardening of Linux systems using Ansible. The 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/harden-linux.git
+   git clone https://github.com/<your-github-username>/harden-linux.git
    cd harden-linux
    ```
 

@@ -5,15 +5,17 @@ The **Harden Linux** project is a comprehensive Ansible playbook suite designed 
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Features](#features)
-3. [Prerequisites](#prerequisites)
-4. [Installation](#installation)
-5. [Playbook Steps](#playbook-steps)
-6. [Monitoring](#monitoring)
-7. [License](#license)
-8. [Contributing](#contributing)
-9. [Acknowledgments](#acknowledgments)
-10. [Contact](#contact)
+2. [Design Decisions](#DesignDecisions)
+3. [Architecture](#Architecture)
+4. [Features](#features)
+5. [Prerequisites](#prerequisites)
+6. [Installation](#installation)
+7. [Playbook Steps](#playbook-steps)
+8. [Monitoring](#monitoring)
+9. [License](#license)
+10. [Contributing](#contributing)
+11. [Acknowledgments](#acknowledgments)
+12. [Contact](#contact)
 
 ## Overview
 

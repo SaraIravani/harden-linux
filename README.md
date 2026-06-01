@@ -121,7 +121,7 @@ The following steps represent the playbooks available in this project:
 
 ## Monitoring
 
-The monitoring step is crucial for maintaining an overview of your system's health and security. This step integrates with the [ansible-prometheus-grafana-stack](https://github.com/yourusername/ansible-prometheus-grafana-stack) to set up monitoring for system performance and security.
+The monitoring step is crucial for maintaining an overview of your system's health and security. This step integrates with the [ansible-prometheus-grafana-stack](https://github.com/SaraIravani/ansible-prometheus-grafana-stack) to set up monitoring for system performance and security.
 
 ### Setup Instructions
 

@@ -21,32 +21,29 @@ This project automates Linux security hardening using Ansible by applying securi
 
 ## Design Decisions
 
-This project was designed using a role-based Ansible architecture to keep security controls modular, reusable, and easy to maintain.
+- **Role-based structure over a single monolithic playbook** — each security concern 
+  (user access, kernel hardening, network security) is an independent role so it can 
+  be run selectively, tested in isolation, and reused across projects.
 
-Instead of implementing all hardening tasks in a single playbook, each security domain is separated into dedicated roles and playbooks such as user management, password policies, network security, auditing, and kernel hardening.
+- **Ordered execution matters** — playbooks run in a deliberate sequence: initial 
+  assessment first, then base config, then access controls, then network, then 
+  auditing. This order prevents dependency failures (e.g. auditing requires auditd 
+  to be installed before rules can be applied).
 
-This approach improves maintainability, simplifies troubleshooting, and allows individual hardening components to be reused across different Linux environments.
+- **Idempotency by design** — every task uses Ansible's declarative modules rather 
+  than raw shell commands, so playbooks can be re-run safely without side effects.
 
-The hardening controls are inspired by industry-standard security practices and common Linux security benchmarks such as CIS recommendations. The goal is to make Linux hardening repeatable, auditable, and scalable through Infrastructure as Code.
+- **Monitoring integrated as a final step** — Prometheus and Grafana are deployed 
+  after hardening completes so you can verify security posture metrics immediately 
+  after a run, not as a separate manual process.
+
+- **Fail2Ban chosen for brute-force protection** — lightweight, no agent required, 
+  works with existing sshd logs. Evaluated alternatives (CrowdSec) but Fail2Ban 
+  fits better for standalone server environments without centralized log aggregation.
 
 ## Architecture
 
-The project follows a centralized automation model where an Ansible control node securely connects to target Linux servers through SSH and applies security configurations.
-
-Control Node (Ansible)
-        |
-        | SSH
-        v
-Target Linux Hosts
-        |
-        v
-Security Hardening
-(User Access, Password Policies,
-Network Security, Auditing,
-Kernel Hardening, Compliance)
-        |
-        v
-Monitoring (Prometheus + Grafana)
+![Harden Linux Architecture]<img width="350" height="290" alt="image" src="https://github.com/user-attachments/assets/ed7a17d4-d8cb-4b1c-9356-8f22f70f3d41" />
 
 ## Features
 

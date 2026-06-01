@@ -1,0 +1,15 @@
+---
+# SSH hardening defaults can be overridden per host.
+hardening_ssh_port: 22
+hardening_ssh_allow_groups:
+  - sudo
+hardening_ssh_password_authentication: false
+hardening_ssh_permit_root_login: "no"
+hardening_ssh_max_auth_tries: 3
+hardening_ssh_login_grace_time: 30
+hardening_ssh_client_alive_interval: 300
+hardening_ssh_client_alive_count_max: 2
+hardening_allowed_tcp_ports:
+  - 22
+  - 80
+  - 443

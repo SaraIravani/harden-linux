@@ -1,0 +1,17 @@
+# Managed by Ansible - Linux Hardening
+Port {{ hardening_ssh_port }}
+Protocol 2
+PermitRootLogin {{ hardening_ssh_permit_root_login }}
+PasswordAuthentication {{ hardening_ssh_password_authentication | ternary('yes', 'no') }}
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding no
+MaxAuthTries {{ hardening_ssh_max_auth_tries }}
+LoginGraceTime {{ hardening_ssh_login_grace_time }}
+AllowGroups {{ hardening_ssh_allow_groups | join(' ') }}
+ClientAliveInterval {{ hardening_ssh_client_alive_interval }}
+ClientAliveCountMax {{ hardening_ssh_client_alive_count_max }}
+AllowAgentForwarding no
+AllowTcpForwarding no
+PrintMotd no
+Subsystem sftp /usr/lib/openssh/sftp-server

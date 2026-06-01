@@ -1,0 +1,18 @@
+---
+- name: Deploy fail2ban jail.local
+  ansible.builtin.template:
+    src: jail.local.j2
+    dest: "{{ hardening_fail2ban_jail_local }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+  notify: restart fail2ban
+  when: not hardening_audit_mode | bool
+
+- name: Ensure fail2ban service is enabled
+  ansible.builtin.service:
+    name: fail2ban
+    state: started
+    enabled: true
+  when: not hardening_audit_mode | bool

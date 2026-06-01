@@ -1,0 +1,32 @@
+---
+hardening_packages_common:
+  - fail2ban
+  - sudo
+  - rsyslog
+
+hardening_packages_debian:
+  - unattended-upgrades
+  - apt-listchanges
+  - ufw
+
+hardening_packages_redhat:
+  - dnf-automatic
+  - firewalld
+
+hardening_sshd_config_file: /etc/ssh/sshd_config
+hardening_sshd_backup_suffix: ".pre_hardening"
+
+hardening_sysctl:
+  net.ipv4.ip_forward: 0
+  net.ipv4.conf.all.accept_redirects: 0
+  net.ipv4.conf.default.accept_redirects: 0
+  net.ipv4.conf.all.send_redirects: 0
+  net.ipv4.conf.default.send_redirects: 0
+  net.ipv4.conf.all.rp_filter: 1
+  net.ipv4.conf.default.rp_filter: 1
+  net.ipv4.tcp_syncookies: 1
+  net.ipv6.conf.all.accept_redirects: 0
+  kernel.kptr_restrict: 2
+  kernel.dmesg_restrict: 1
+
+hardening_fail2ban_jail_local: /etc/fail2ban/jail.local

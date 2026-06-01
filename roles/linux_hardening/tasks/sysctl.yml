@@ -1,0 +1,11 @@
+---
+- name: Apply kernel security sysctl settings
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: true
+    sysctl_set: true
+  loop: "{{ hardening_sysctl | dict2items }}"
+  when: not hardening_audit_mode | bool
+  notify: reboot if required

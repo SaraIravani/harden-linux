@@ -1,0 +1,14 @@
+---
+- name: Verify hardening controls
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check sshd config exists
+      ansible.builtin.stat:
+        path: /etc/ssh/sshd_config
+      register: sshd_config
+
+    - name: Assert sshd config was deployed
+      ansible.builtin.assert:
+        that:
+          - sshd_config.stat.exists

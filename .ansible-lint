@@ -1,0 +1,9 @@
+---
+profile: production
+exclude_paths:
+  - .git/
+  - roles/gantsign.pwquality/moleculew
+warn_list:
+  - experimental
+skip_list:
+  - yaml[line-length]

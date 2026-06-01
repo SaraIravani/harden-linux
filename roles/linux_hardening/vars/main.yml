@@ -1,0 +1,8 @@
+---
+hardening_firewall_service:
+  Debian: ufw
+  RedHat: firewalld
+
+hardening_ssh_service:
+  Debian: ssh
+  RedHat: sshd
